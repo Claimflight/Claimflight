@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flight Compensation Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-image: url('https://cdn.pixabay.com/photo/2016/11/29/09/35/plane-1867128_960_720.jpg');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        }
+        h1, p {
+            text-align: center;
+            color: white;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-top: 10px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            background-color: #4CAF50;
+            color: white;
+            font-size: 18px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .language-selector {
+            text-align: right;
+            margin-bottom: 20px;
+        }
+        .language-selector select {
+            padding: 5px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="language-selector">
+        <label for="language">Language:</label>
+        <select id="language" onchange="changeLanguage()">
+            <option value="en">English</option>
+            <option value="de">Deutsch</option>
+            <option value="ru">Русский</option>
+            <option value="uk">Українська</option>
+        </select>
+    </div>
+
+    <h1 id="title">Get Compensation for a Delayed or Canceled Flight</h1>
+    <p id="subtitle">Fill in the form below to check if you're eligible for compensation.</p>
+
+    <form action="https://formspree.io/f/mlderjje" method="POST">
+        <label for="from" id="labelFrom">From (Airport):</label>
+        <input type="text" id="from" name="from" placeholder="Enter departure airport" required>
+
+        <label for="to" id="labelTo">To (Airport):</label>
+        <input type="text" id="to" name="to" placeholder="Enter destination airport" required>
+
+        <label for="flightNumber" id="labelFlightNumber">Flight Number:</label>
+        <input type="text" id="flightNumber" name="flightNumber" placeholder="Enter flight number" required>
+
+        <label for="bookingCode" id="labelBookingCode">Booking Code (PNR):</label>
+        <input type="text" id="bookingCode" name="bookingCode" placeholder="Enter booking code" required>
+
+        <label for="name" id="labelName">Passenger's First Name:</label>
+        <input type="text" id="name" name="name" placeholder="Enter first name" required>
+
+        <label for="surname" id="labelSurname">Passenger's Last Name:</label>
+        <input type="text" id="surname" name="surname" placeholder="Enter last name" required>
+
+        <label for="email" id="labelEmail">Email:</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+
+        <button type="submit" id="submitButton">Submit Compensation Request</button>
+    </form>
+</div>
+
+<script>
+    const translations = {
+        en: {
+            title: "Get Compensation for a Delayed or Canceled Flight",
+            subtitle: "Fill in the form below to check if you're eligible for compensation.",
+            from: "From (Airport):",
+            to: "To (Airport):",
+            flightNumber: "Flight Number:",
+            bookingCode: "Booking Code (PNR):",
+            name: "Passenger's First Name:",
+            surname: "Passenger's Last Name:",
+            email: "Email:",
+            submit: "Submit Compensation Request"
+        },
+        de: {
+            title: "Erhalten Sie eine Entschädigung für verspäteten oder stornierten Flug",
+            subtitle: "Füllen Sie das untenstehende Formular aus, um zu prüfen, ob Sie anspruchsberechtigt sind.",
+            from: "Von (Flughafen):",
+            to: "Nach (Flughafen):",
+            flightNumber: "Flugnummer:",
+            bookingCode: "Buchungscode (PNR):",
+            name: "Vorname des Passagiers:",
+            surname: "Nachname des Passagiers:",
+            email: "E-Mail:",
+            submit: "Entschädigungsantrag einreichen"
+        },
+        ru: {
+            title: "Получите компенсацию за задержанный или отменённый рейс",
+            subtitle: "Заполните форму ниже, чтобы узнать, имеете ли вы право на компенсацию.",
+            from: "Откуда (Аэропорт):",
+            to: "Куда (Аэропорт):",
+            flightNumber: "Номер рейса:",
+            bookingCode: "Код бронирования (PNR):",
+            name: "Имя пассажира:",
+            surname: "Фамилия пассажира:",
+            email: "Электронная почта:",
+            submit: "Отправить запрос на компенсацию"
+        },
+        uk: {
+            title: "Отримайте компенсацію за затриманий або скасований рейс",
+            subtitle: "Заповніть форму нижче, щоб перевірити, чи маєте ви право на компенсацію.",
+            from: "Звідки (Аеропорт):",
+            to: "Куди (Аеропорт):",
+            flightNumber: "Номер рейсу:",
+            bookingCode: "Код бронювання (PNR):",
+            name: "Ім'я пасажира:",
+            surname: "Прізвище пасажира:",
+            email: "Електронна пошта:",
+            submit: "Відправити запит на компенсацію"
+        }
+    };
+
+    function changeLanguage() {
+        const language = document.getElementById('language').value;
+        document.getElementById('title').innerText = translations[language].title;
+        document.getElementById('subtitle').innerText = translations[language].subtitle;
+        document.getElementById('labelFrom').innerText = translations[language].from;
+        document.getElementById('labelTo').innerText = translations[language].to;
+        document.getElementById('labelFlightNumber').innerText = translations[language].flightNumber;
+        document.getElementById('labelBookingCode').innerText = translations[language].bookingCode;
+        document.getElementById('labelName').innerText = translations[language].name;
+        document.getElementById('labelSurname').innerText = translations[language].surname;
+        document.getElementById('labelEmail').innerText = translations[language].email;
+        document.getElementById('submitButton').innerText = translations[language].submit;
+    }
+
+    // Set default language to English
+    window.onload = function() {
+        changeLanguage();
+    };
+</script>
+
+</body>
+</html>
